@@ -1,26 +1,18 @@
 #include "pch.h"
 #include "main.h"
+#include "Affichage.h"
 #include <SFML/Graphics.hpp>
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-
-    while (window.isOpen())
+    Affichage affichage(10);
+    
+    while (true)
     {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+        //metre le code en dessu
 
-        window.clear();
-        window.draw(shape);
-        window.display();
+        // update de l'affichage
+        affichage.Update();
     }
-
-    return 0;
+    
 }
