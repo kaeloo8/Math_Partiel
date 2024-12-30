@@ -5,14 +5,12 @@
 
 int main()
 {
-    Affichage affichage(10);
-    
-    while (true)
-    {
-        //metre le code en dessu
+    Affichage affichage;
 
-        // update de l'affichage
+    while (affichage.Win.isOpen())
+    {
         affichage.Update();
     }
-    
+
+    return 0;
 }
