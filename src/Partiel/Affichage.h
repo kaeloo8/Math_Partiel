@@ -8,8 +8,8 @@ class Affichage
 {
 public:
     sf::RenderWindow Win;
-    std::vector<std::vector<int>> ListePoint;
-    std::vector<std::vector<int>> LasteListePoint;
+    std::vector<std::vector<float>> ListePoint;
+    std::vector<float> LasteListePoint;
     int Width;
     int Height;
     int Scale;
@@ -18,6 +18,7 @@ public:
     Affichage();
 
     void Update();
-    void add(std::vector<std::vector<int>> l);
+    void add(std::vector<std::vector<float>> l);
     void DrawBase();
+    void DrawShape();
 };

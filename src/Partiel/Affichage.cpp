@@ -23,12 +23,14 @@ void Affichage::Update() {
     Win.clear(sf::Color::White); 
     DrawBase();
 
+    DrawShape();
+
     Win.display(); 
 }
 
-void Affichage::add(std::vector<std::vector<int>> liste) {
-    for (std::vector<int> Nliste : liste) {
-        ListePoint.push_back(Nliste);
+void Affichage::add(std::vector<std::vector<float>> liste) {
+    for (std::vector<float> Nliste : liste) {
+        ListePoint.push_back({ Nliste[0] + 7,-1*Nliste[1] + 7 });
     }
 }
 
@@ -45,7 +47,7 @@ void Affichage::DrawBase() {
         line.setPosition(Pos);
 
         
-        sf::Text text(std::to_string(i-7), font, 15);
+        sf::Text text(std::to_string(-1*i+7), font, 15);
         text.setFillColor(sf::Color::Black);
         text.setPosition(Width / 2 - 20, decal - 20);
 
@@ -70,5 +72,28 @@ void Affichage::DrawBase() {
 
         Win.draw(line);
         Win.draw(text);
+    }
+}
+
+void Affichage::DrawShape() {
+    if (LasteListePoint.empty() && ListePoint.size() > 0) {
+        LasteListePoint= ListePoint[0];
+    }
+
+    for (size_t i = 0; i < ListePoint.size(); i++) {
+        const std::vector<float>& Point = ListePoint[i];
+
+        if (i > 0) {
+            const std::vector<float>& LastPoint = ListePoint[i - 1];
+
+            sf::Vertex line[] = {
+                sf::Vertex(sf::Vector2f(LastPoint[0] * Scale, LastPoint[1] * Scale), sf::Color::Red),
+                sf::Vertex(sf::Vector2f(Point[0] * Scale, Point[1] * Scale), sf::Color::Red)
+            };
+
+            Win.draw(line, 2, sf::Lines);
+        }
+
+        LasteListePoint = Point;
     }
 }
