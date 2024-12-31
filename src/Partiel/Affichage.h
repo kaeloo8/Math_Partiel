@@ -17,7 +17,9 @@ public:
     Affichage();
 
     void Update();
-    void add(std::vector<std::vector<float>> l);
     void DrawBase();
     void DrawShape();
+
+    void add(std::vector<std::vector<float>> liste);
+    void addR(std::vector<std::vector<float>> liste);
 };

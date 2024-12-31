@@ -112,7 +112,8 @@ int main()
     while (affichage.Win.isOpen())
     {
 
-        affichage.add(Hermite(points, derivatives,250));
+        //affichage.add(Hermite(points, derivatives,250));
+        affichage.addR(Lagrange(liste, 250));
         affichage.add(Lagrange(liste, 250));
         affichage.Update();
     }

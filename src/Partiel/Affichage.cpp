@@ -34,6 +34,22 @@ void Affichage::add(std::vector<std::vector<float>> liste) {
     }
 }
 
+void Affichage::addR(std::vector<std::vector<float>> liste) {
+    std::vector<std::vector<float>> l;
+
+    int size = liste.size() - 1;
+    float m = (liste[size][0] + liste[0][0]) / 2;
+
+    for (std::vector<float> Nliste : liste) {
+        std::vector<float> r = { 2 * m - Nliste[0], Nliste[1] };
+        l.push_back(r);
+    }
+
+    for (std::vector<float> Nliste : l) {
+        ListePoint.push_back({ Nliste[0] + 7, -1 * Nliste[1] + 7 });
+    }
+}
+
 void Affichage::DrawBase() {
     for (int i = 0; i * Scale < Height; i++) {
         float decal = i * Scale;
