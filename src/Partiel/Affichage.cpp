@@ -30,17 +30,19 @@ void Affichage::Update() {
 
 void Affichage::add(std::vector<std::vector<float>> liste) {
     for (std::vector<float> Nliste : liste) {
-        ListePoint.push_back({ Nliste[0] + 7,-1*Nliste[1] + 7 });
+        ListePoint.push_back({ Nliste[0]+7, -1 * Nliste[1]+7 });
     }
 }
 
 void Affichage::DrawBase() {
     for (int i = 0; i * Scale < Height; i++) {
         float decal = i * Scale;
-
-        const sf::Vector2f Pos = { 0, decal };
+        
         int size = 2;
         if (i == 7) { size = 4; }
+
+        decal -= size / 2;
+        const sf::Vector2f Pos = { 0, decal};
 
         sf::RectangleShape line(sf::Vector2f(Width, size));
         line.setFillColor(sf::Color::Black);
@@ -58,9 +60,11 @@ void Affichage::DrawBase() {
     for (int i = 0; i * Scale < Width; i++) {
         float decal = i * Scale;
 
-        const sf::Vector2f Pos = { decal, 0 };
         int size = 2;
         if (i == 7) { size = 4; }
+
+        decal -= size / 2;
+        const sf::Vector2f Pos = { decal, 0 };
 
         sf::RectangleShape line(sf::Vector2f(size, Height));
         line.setFillColor(sf::Color::Black);
@@ -71,29 +75,30 @@ void Affichage::DrawBase() {
         text.setPosition(decal - 20, Height / 2 - 20);
 
         Win.draw(line);
-        Win.draw(text);
+        if (i != 7) {
+            Win.draw(text);
+        }
     }
 }
 
 void Affichage::DrawShape() {
-    if (LasteListePoint.empty() && ListePoint.size() > 0) {
-        LasteListePoint= ListePoint[0];
-    }
+    if (ListePoint.size() > 1) {
+        
+        for (int i = 0; i < ListePoint.size() - 1; i++) {
+            const std::vector<float>& Point1 = ListePoint[i];
+            const std::vector<float>& Point2 = ListePoint[i + 1];
+            float dx = Point2[0] - Point1[0];
+            float dy = Point2[1] - Point1[1];
+            float length = std::sqrt(dx * dx + dy * dy);
+            float angle = std::atan2(dy, dx);
 
-    for (size_t i = 0; i < ListePoint.size(); i++) {
-        const std::vector<float>& Point = ListePoint[i];
+            sf::RectangleShape line(sf::Vector2f(length * Scale, 1));
+            line.setOrigin(0, 0.5f);
+            line.setPosition(Point1[0] * Scale, Point1[1] * Scale);
+            line.setRotation(angle * 180.f / 3.14159f);
+            line.setFillColor(sf::Color::Red);
 
-        if (i > 0) {
-            const std::vector<float>& LastPoint = ListePoint[i - 1];
-
-            sf::Vertex line[] = {
-                sf::Vertex(sf::Vector2f(LastPoint[0] * Scale, LastPoint[1] * Scale), sf::Color::Red),
-                sf::Vertex(sf::Vector2f(Point[0] * Scale, Point[1] * Scale), sf::Color::Red)
-            };
-
-            Win.draw(line, 2, sf::Lines);
+            Win.draw(line);
         }
-
-        LasteListePoint = Point;
     }
 }

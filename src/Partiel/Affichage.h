@@ -9,7 +9,6 @@ class Affichage
 public:
     sf::RenderWindow Win;
     std::vector<std::vector<float>> ListePoint;
-    std::vector<float> LasteListePoint;
     int Width;
     int Height;
     int Scale;
