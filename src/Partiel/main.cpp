@@ -197,10 +197,6 @@ int main()
             std::cout << std::endl;
             std::cout << "Dessiner l'ellipse..." << std::endl;
             Ellipse(orx, ory, sx, sy, affichage);
-
-            // Partie 1: Dessiner l'ellipse
-            std::cout << "Dessiner l'ellipse..." << std::endl;
-            Ellipse(0, 0, 3, 1, affichage);
         }
         if (choix == 2) {
             // Partie 2: Calculer et afficher la courbe Lagrange
