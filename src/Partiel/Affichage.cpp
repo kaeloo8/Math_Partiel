@@ -129,3 +129,9 @@ void Affichage::addV(std::vector<std::vector<float>> liste) {
         ListePoint.push_back({ Nliste[0] + 7, -1 * Nliste[1] + 7 });
     }
 }
+
+void Affichage::addY(std::vector<std::vector<float>> liste) {
+    for (std::vector<float> Nliste : liste) {
+        ListePoint.push_back({ Nliste[1] + 7, -1 * Nliste[0] + 7 });
+    }
+}

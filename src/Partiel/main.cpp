@@ -179,9 +179,24 @@ int main()
         if (choix == 1) {
             affichage.clear();
 
-            // Partie 1: Dessiner l'ellipse
+            std::cout << "Choisissez l'origin x :";
+            int orx;
+            std::cin >> orx;
+            std::cout << std::endl;
+            std::cout << "Choisissez l'origin y :";
+            int ory;
+            std::cin >> ory;
+            std::cout << std::endl;
+            std::cout << "size x :";
+            int sx;
+            std::cin >> sx;
+            std::cout << std::endl;
+            std::cout << "size y :";
+            int sy;
+            std::cin >> sy;
+            std::cout << std::endl;
             std::cout << "Dessiner l'ellipse..." << std::endl;
-            Ellipse(0, 0, 3, 1, affichage);
+            Ellipse(orx, ory, sx, sy, affichage);
         }
         if (choix == 2) {
             // Partie 2: Calculer et afficher la courbe Lagrange
@@ -200,27 +215,42 @@ int main()
             points = { {0,-1},{-2,-1}, {-4,-3} };
             affichage.addV(Lagrange(points, 250));
 
-            points = { {-4,-3},{-2,2} };
-            derivatives = { 15,-1 };
+            points = { {-3,-4},{0,-4}, {2,-2} };
+            affichage.addY(Lagrange(points, 250));
+
+            points = { {-2,2},{-1,3} };
+            derivatives = { -0.5,2 };
             affichage.add(Hermite(points, derivatives, 250));
 
-            // Hermite entre -4,-3 et -2,2 (problemme lagrange impossible 2 x meme val = /0)
-            
-            affichage.add({ {-2,3},{-5,1} }); 
-            
-            
-            
-            points = { {-6,1},{-5,1} };
-            derivatives =  {-1,1};
-            affichage.addV(Hermite(points, derivatives, 250));
+            points = { {-1,3},{-2,3} };
+            derivatives = { -3,1 };
+            affichage.add(Hermite(points, derivatives, 250));
 
-            // Hermite entre -2,2 et -2,3
+            affichage.add({ { -2,3 }, { -5,1 } });
+            
+            points = { {-5,1},{-6,1} };
+            derivatives = { 1,-1 };
+            affichage.add(Hermite(points, derivatives, 250));
 
-            // Hermite entre -5,1 et -6,2 (problemme lagrange impossible 2 x meme val = /0)
+            points = { {1,-6},{2,-6} };
+            derivatives = { -1,1 };
+            affichage.addY(Hermite(points, derivatives, 250));
 
-            // Hermite entre -6,2 et -5,2
+            points = { {-6,2},{-5,2} };
+            derivatives = { 0,-3 };
+            affichage.add(Hermite(points, derivatives, 250));
 
-            // Hermite entre -5,2 et -2,4
+            points = { {-5,2},{-2,4} };
+            derivatives = { -0.5f,1.5f };
+            affichage.add(Hermite(points, derivatives, 250));
+
+            points = { {-2,4},{1,5} };
+            derivatives = { 2,-0.5 };
+            affichage.add(Hermite(points, derivatives, 250));
+
+            points = { {1,5},{4,2} };
+            derivatives = { -2.5,0 };
+            affichage.add(Hermite(points, derivatives, 250));
 
             // Hermite entre -2,4 et 1,5
 
