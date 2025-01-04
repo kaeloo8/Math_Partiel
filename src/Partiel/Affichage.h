@@ -19,7 +19,10 @@ public:
     void Update();
     void DrawBase();
     void DrawShape();
+    void clear(); 
 
+
+    void addV(std::vector<std::vector<float>> liste);
     void add(std::vector<std::vector<float>> liste);
     void addR(std::vector<std::vector<float>> liste);
 };

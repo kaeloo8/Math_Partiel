@@ -118,3 +118,14 @@ void Affichage::DrawShape() {
         }
     }
 }
+
+void  Affichage::clear() {
+    ListePoint.clear();
+}
+
+void Affichage::addV(std::vector<std::vector<float>> liste) {
+    for (int i = 0; i < liste.size(); i++) {
+        std::vector<float> Nliste = liste[liste.size() - 1 - i];
+        ListePoint.push_back({ Nliste[0] + 7, -1 * Nliste[1] + 7 });
+    }
+}
