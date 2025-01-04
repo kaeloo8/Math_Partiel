@@ -214,9 +214,55 @@ void Trace(Affichage& affichage)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Fonction génératrice de courbes
-void Trace_courbe(Affichage& affichage, const std::vector<std::vector<float>>& points)
+void Trace_courbe(Affichage& affichage)
 {
-    
+    affichage.clear(); // Nettoyer l'affichage
+
+    // Liste pour stocker les points saisis par l'utilisateur
+    std::vector<std::vector<float>> points;
+
+    std::cout << "Entrez les points par lesquels la courbe doit passer." << std::endl;
+    std::cout << "Entrez les coordonnées x et y séparément (tapez 'fin' pour terminer)." << std::endl;
+
+    while (true) {
+        std::string input;
+        std::cout << "Point " << points.size() + 1 << " - x (ou 'fin' pour arrêter) : ";
+        std::cin >> input;
+
+        // Si l'utilisateur entre "fin", on sort de la boucle
+        if (input == "fin") break;
+
+        // Convertir l'entrée en float
+        float x;
+        try {
+            x = std::stof(input);
+        }
+        catch (...) {
+            std::cout << "Valeur invalide pour x. Veuillez entrer un nombre." << std::endl;
+            continue;
+        }
+
+        // Saisir la valeur de y
+        std::cout << "Point " << points.size() + 1 << " - y : ";
+        float y;
+        std::cin >> y;
+
+        // Ajouter le point à la liste
+        points.push_back({ x, y });
+    }
+
+    // Vérifier qu'il y a au moins deux points pour tracer une courbe
+    if (points.size() < 2) {
+        std::cout << "Il faut au moins deux points pour tracer une courbe." << std::endl;
+        return;
+    }
+
+    // Nombre de points pour générer la courbe
+    int NombreDePoint = 250;
+
+    // Appliquer l'interpolation de Lagrange et afficher la courbe
+    std::vector<std::vector<float>> courbe = Lagrange(points, NombreDePoint);
+    affichage.addV(courbe); // Afficher la courbe
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -278,7 +324,7 @@ int main()
             affichage.clear();
 
             // Partie 3: Calculer et afficher la courbe Hermite
-
+            Trace_courbe(affichage);
 
         }
         if (choix == 4) {
