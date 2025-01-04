@@ -154,6 +154,75 @@ std::vector<std::vector<float>> Hermite(const std::vector<std::vector<float>>& p
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Fonction pour le tracé d'une forme quelconque
+void Trace(Affichage& affichage)
+{
+    // liste des points utilisés pour Lagrange et Hermite
+    std::vector<std::vector<float>> points = {};
+    std::vector<float> derivatives = {};
+
+    points = { {4,2},{3,-1}, {2,-2} };
+    affichage.addV(Lagrange(points, 250));
+
+    points = { {2,-2},{0,-1} };
+    derivatives = { -3,1 };
+    affichage.add(Hermite(points, derivatives, 250));
+
+    points = { {0,-1},{-2,-1}, {-4,-3} };
+    affichage.addV(Lagrange(points, 250));
+
+    points = { {-3,-4},{0,-4}, {2,-2} };
+    affichage.addY(Lagrange(points, 250));
+
+    points = { {-2,2},{-1,3} };
+    derivatives = { -0.5,2 };
+    affichage.add(Hermite(points, derivatives, 250));
+
+    points = { {-1,3},{-2,3} };
+    derivatives = { -3,1 };
+    affichage.add(Hermite(points, derivatives, 250));
+
+    affichage.add({ { -2,3 }, { -5,1 } });
+
+    points = { {-5,1},{-6,1} };
+    derivatives = { 1,-1 };
+    affichage.add(Hermite(points, derivatives, 250));
+
+    points = { {1,-6},{2,-6} };
+    derivatives = { -1,1 };
+    affichage.addY(Hermite(points, derivatives, 250));
+
+    points = { {-6,2},{-5,2} };
+    derivatives = { 0,-3 };
+    affichage.add(Hermite(points, derivatives, 250));
+
+    points = { {-5,2},{-2,4} };
+    derivatives = { -0.5f,1.5f };
+    affichage.add(Hermite(points, derivatives, 250));
+
+    points = { {-2,4},{1,5} };
+    derivatives = { 2,-0.5 };
+    affichage.add(Hermite(points, derivatives, 250));
+
+    points = { {1,5},{4,2} };
+    derivatives = { -2.5,0 };
+    affichage.add(Hermite(points, derivatives, 250));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Fonction génératrice de courbes
+void Trace_courbe(Affichage& affichage, const std::vector<std::vector<float>>& points)
+{
+    
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include <iostream> // Pour l'entrée de la console
 
 int main()
@@ -203,59 +272,7 @@ int main()
             // Utile point : 1,5 // 4,2 // 3,-1 // 2,-2 // 0,-1 // -4,-3 // -4,0 // -2,2 // -1,3 // -2,3 // -5,1 // -6,1 // -6,2 // -5,2 // -2,4
             affichage.clear();
             
-            
-
-            points = {{4,2},{3,-1}, {2,-2}};
-            affichage.addV(Lagrange(points, 250));
-
-            points = { {2,-2},{0,-1} };
-            derivatives = { -3,1 };
-            affichage.add(Hermite(points, derivatives, 250));
-
-            points = { {0,-1},{-2,-1}, {-4,-3} };
-            affichage.addV(Lagrange(points, 250));
-
-            points = { {-3,-4},{0,-4}, {2,-2} };
-            affichage.addY(Lagrange(points, 250));
-
-            points = { {-2,2},{-1,3} };
-            derivatives = { -0.5,2 };
-            affichage.add(Hermite(points, derivatives, 250));
-
-            points = { {-1,3},{-2,3} };
-            derivatives = { -3,1 };
-            affichage.add(Hermite(points, derivatives, 250));
-
-            affichage.add({ { -2,3 }, { -5,1 } });
-            
-            points = { {-5,1},{-6,1} };
-            derivatives = { 1,-1 };
-            affichage.add(Hermite(points, derivatives, 250));
-
-            points = { {1,-6},{2,-6} };
-            derivatives = { -1,1 };
-            affichage.addY(Hermite(points, derivatives, 250));
-
-            points = { {-6,2},{-5,2} };
-            derivatives = { 0,-3 };
-            affichage.add(Hermite(points, derivatives, 250));
-
-            points = { {-5,2},{-2,4} };
-            derivatives = { -0.5f,1.5f };
-            affichage.add(Hermite(points, derivatives, 250));
-
-            points = { {-2,4},{1,5} };
-            derivatives = { 2,-0.5 };
-            affichage.add(Hermite(points, derivatives, 250));
-
-            points = { {1,5},{4,2} };
-            derivatives = { -2.5,0 };
-            affichage.add(Hermite(points, derivatives, 250));
-
-            // Hermite entre -2,4 et 1,5
-
-            
-
+            Trace(affichage);
         }
         if (choix == 3) {
             affichage.clear();
