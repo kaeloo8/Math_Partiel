@@ -113,58 +113,40 @@ std::vector<std::vector<float>> Lagrange(std::vector<std::vector<float>> points,
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Fonction pour l'interpolation de Hermite
-std::vector<std::vector<float>> Hermite(std::vector<std::vector<float>> points, std::vector<std::vector<float>> derivatives, int NombreDePoint) {
-    std::vector<std::vector<float>> result; // Liste qui va contenir les points calculés
-    int n = points.size();  // On récupère la taille de la liste des points (nombre de points)
-
-    // On vérifie si le nombre de points correspond au nombre de dérivées
-    if (points.size() != derivatives.size()) {
-        std::cerr << "Le nombre de points et le nombre de dérivées ne correspondent pas." << std::endl;
-        return result;  // Si ce n'est pas le cas, on affiche une erreur et on retourne une liste vide
+std::vector<std::vector<float>> Hermite(const std::vector<std::vector<float>>& points, const std::vector<float>& derivatives, int nbp){
+    // Vérification des données
+    if (points.size() != derivatives.size() || points.empty() || nbp < 2) {
+        throw std::invalid_argument("Invalid input data");
     }
 
-    // Calcul des valeurs minimales et maximales de X dans la liste des points
-    float minX = points[0][0], maxX = points[0][0]; // Initialisation
-    for (const auto& point : points) { // On parcourt tous les points pour obtenir min et max
-        if (point[0] < minX) minX = point[0];
-        if (point[0] > maxX) maxX = point[0];
-    }
+    std::vector<std::vector<float>> result; // Résultat des points interpolés
+    int n = points.size();
 
-    // On vérifie que maxX et minX sont différents, car une division par zéro est impossible
-    if (maxX == minX) {
-        std::cerr << "Erreur : maxX et minX sont égaux, division par zéro impossible." << std::endl;
-        return result; // Si les valeurs sont égales, on retourne une liste vide
-    }
+    // Parcourir chaque segment entre deux points
+    for (int i = 0; i < n - 1; ++i) {
+        float x0 = points[i][0], y0 = points[i][1];      // Point de départ
+        float x1 = points[i + 1][0], y1 = points[i + 1][1]; // Point d'arrivée
+        float m0 = derivatives[i];                      // Dérivée en x0
+        float m1 = derivatives[i + 1];                  // Dérivée en x1
 
-    // On calcule l'écart entre chaque point qu'on va générer
-    float step = (maxX - minX) / (NombreDePoint - 1); // Espacement entre les points
+        // Générer `nbp` points pour ce segment
+        for (int j = 0; j < nbp; ++j) {
+            float t = static_cast<float>(j) / (nbp - 1); // Paramètre normalisé [0, 1]
 
-    // On commence à calculer les points de la courbe
-    for (int i = 0; i < NombreDePoint; ++i) { // Pour chaque point que l'on veut calculer
-        float x = minX + i * step; // Calcul de x
-        float y = 0;  // La valeur de y sera calculée pour chaque x
-        float dy = 0; // Dérivée en y (mais non utilisée directement dans ce calcul)
+            // Polynômes de base de Hermite
+            float h00 = (1 + 2 * t) * (1 - t) * (1 - t);
+            float h10 = t * (1 - t) * (1 - t);
+            float h01 = t * t * (3 - 2 * t);
+            float h11 = t * t * (t - 1);
 
-        // Calcul de l'interpolation de Hermite pour chaque x
-        for (int j = 0; j < n; ++j) {  // Pour chaque point de données
-            float dx = x - points[j][0];  // Différence entre x et le x du point
-            float dx2 = dx * dx;  // Carré de dx
-            float dx3 = dx2 * dx;  // Cube de dx
+            // Calcul de la position interpolée
+            float x = h00 * x0 + h10 * (x1 - x0) + h01 * x1 + h11 * (x1 - x0);
+            float y = h00 * y0 + h10 * m0 * (x1 - x0) + h01 * y1 + h11 * m1 * (x1 - x0);
 
-            // Calcul des polynômes de Hermite h1 et h2
-            float h1 = 2 * dx3 / ((maxX - minX) * (maxX - minX) * (maxX - minX)) - 3 * dx2 / ((maxX - minX) * (maxX - minX)) + 1;
-            float h2 = dx3 / ((maxX - minX) * (maxX - minX) * (maxX - minX)) - 2 * dx2 / ((maxX - minX) * (maxX - minX)) + dx / (maxX - minX);
-            float h3 = dx3 / ((maxX - minX) * (maxX - minX) * (maxX - minX)) - dx2 / ((maxX - minX) * (maxX - minX)); // Termes supplémentaires si nécessaire
-
-            // Calcul des termes d'interpolation
-            y += h1 * points[j][1] + h2 * derivatives[j][1];
+            result.push_back({ x, y });
         }
-
-        // Ajout du point calculé à la liste des résultats
-        result.push_back({ x, y });
     }
 
-    // Retourner la liste des points calculés
     return result;
 }
 
@@ -179,7 +161,7 @@ int main()
     // liste des points utilisés pour Lagrange et Hermite
     std::vector<std::vector<float>> liste = {};
     std::vector<std::vector<float>> points = {};
-    std::vector<std::vector<float>> derivatives = {};
+    std::vector<float> derivatives = {};
 
     // création de l'affichage
     Affichage affichage;
@@ -206,17 +188,31 @@ int main()
             // Utile point : 1,5 // 4,2 // 3,-1 // 2,-2 // 0,-1 // -4,-3 // -4,0 // -2,2 // -1,3 // -2,3 // -5,1 // -6,1 // -6,2 // -5,2 // -2,4
             affichage.clear();
             
-            points = { {4,2},{3,-1}, {2,-2} };
+            
+
+            points = {{4,2},{3,-1}, {2,-2}};
             affichage.addV(Lagrange(points, 250));
 
-            // Hermite entre 2,-2 et 0,-1
+            points = { {2,-2},{0,-1} };
+            derivatives = { -3,1 };
+            affichage.add(Hermite(points, derivatives, 250));
 
             points = { {0,-1},{-2,-1}, {-4,-3} };
             affichage.addV(Lagrange(points, 250));
 
+            points = { {-4,-3},{-2,2} };
+            derivatives = { 15,-1 };
+            affichage.add(Hermite(points, derivatives, 250));
+
             // Hermite entre -4,-3 et -2,2 (problemme lagrange impossible 2 x meme val = /0)
             
-            affichage.add({ {-2,3},{-5,1} });
+            affichage.add({ {-2,3},{-5,1} }); 
+            
+            
+            
+            points = { {-6,1},{-5,1} };
+            derivatives =  {-1,1};
+            affichage.addV(Hermite(points, derivatives, 250));
 
             // Hermite entre -2,2 et -2,3
 
@@ -228,7 +224,7 @@ int main()
 
             // Hermite entre -2,4 et 1,5
 
-            // Hermite entre 1,5 et 4,2
+            
 
         }
         if (choix == 3) {
