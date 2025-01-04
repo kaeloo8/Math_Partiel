@@ -25,4 +25,5 @@ public:
     void addV(std::vector<std::vector<float>> liste);
     void add(std::vector<std::vector<float>> liste);
     void addR(std::vector<std::vector<float>> liste);
+    void addY(std::vector<std::vector<float>> liste);
 };
