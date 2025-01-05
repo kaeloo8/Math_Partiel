@@ -228,8 +228,8 @@ void Trace_courbe(Affichage& affichage) {
 
     std::vector<std::vector<float>> points; // Points d'origine
     std::vector<std::vector<float>> pointsSymetriques; // Points sym?triques
-    std::vector<float> derivéesPremières; // Dérivées premières à chaque point
-    std::vector<float> derivéesPremièresSymetriques; // Dérivées premières pour les points symétriques
+    std::vector<float> deriveesPremieres; // Dérivées premières à chaque point
+    std::vector<float> deriveesPremieresSymetriques; // Dérivées premières pour les points symétriques
 
     // Saisie des points par l'utilisateur
     std::cout << "Entrez les points par lesquels la courbe doit passer, ainsi que les dérivées premières." << std::endl;
@@ -237,7 +237,7 @@ void Trace_courbe(Affichage& affichage) {
 
     while (true) {
         std::string input;
-        std::cout << "Point " << points.size() + 1 << " - x (ou 'fin' pour arrêter) : ";
+        std::cout << "Point " << points.size() + 1 << " - x (ou 'fin' pour arreter) : ";
         std::cin >> input;
         if (input == "fin") break;
 
@@ -256,11 +256,11 @@ void Trace_courbe(Affichage& affichage) {
 
         points.push_back({ x, y });
 
-        std::cout << "Dérivée première en ce point : ";
-        float derivée;
-        std::cin >> derivée;
+        std::cout << "Derivee premiere en ce point : ";
+        float derivee;
+        std::cin >> derivee;
 
-        derivéesPremières.push_back(derivée);
+        deriveesPremieres.push_back(derivee);
     }
 
     if (points.size() < 2) {
@@ -269,7 +269,7 @@ void Trace_courbe(Affichage& affichage) {
     }
 
     // Demander si une sym?trie doit ?tre ajout?e
-    std::cout << "Voulez-vous ajouter une sym?trie axiale ? (1: oui, 0: non) : ";
+    std::cout << "Voulez-vous ajouter une symetrie axiale ? (1: oui, 0: non) : ";
     int choixSymetrie;
     std::cin >> choixSymetrie;
 
@@ -277,18 +277,18 @@ void Trace_courbe(Affichage& affichage) {
         // Appliquer la symétrie axiale : inversion des y et des dérivées premières
         for (size_t i = 0; i < points.size(); ++i) {
             pointsSymetriques.push_back({ points[i][0], -points[i][1] }); // Symétrie des points
-            derivéesPremièresSymetriques.push_back(-derivéesPremières[i]); // Inverser les dérivées premières
+            deriveesPremieresSymetriques.push_back(-deriveesPremieres[i]); // Inverser les dérivées premières
         }
     }
 
     // Interpolation de Hermite
     int NombreDePoint = 250;
-    std::vector<std::vector<float>> courbe = Hermite(points, derivéesPremières, NombreDePoint);
+    std::vector<std::vector<float>> courbe = Hermite(points, deriveesPremieres, NombreDePoint);
     affichage.addV(courbe); // Afficher la courbe générée par interpolation de Hermite
 
     // Interpolation s?par?e et affichage des courbes
     if (choixSymetrie == 1) {
-        std::vector<std::vector<float>> courbeSymetrique = Hermite(pointsSymetriques, derivéesPremièresSymetriques, NombreDePoint);
+        std::vector<std::vector<float>> courbeSymetrique = Hermite(pointsSymetriques, deriveesPremieresSymetriques, NombreDePoint);
         affichage.addV(courbeSymetrique);
     }
 }
