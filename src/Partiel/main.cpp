@@ -116,42 +116,48 @@ std::vector<std::vector<float>> Lagrange(std::vector<std::vector<float>> points,
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Fonction pour l'interpolation de Hermite
-std::vector<std::vector<float>> Hermite(const std::vector<std::vector<float>>& points, const std::vector<float>& derivatives, int nbp){
+std::vector<std::vector<float>> Hermite(const std::vector<std::vector<float>>& points, const std::vector<float>& derivatives, int nbp) {
+    // Fonction pour interpoler une courbe de Hermite à partir des points et de leurs dérivées.
+
     // Vérification des données
     if (points.size() != derivatives.size() || points.empty() || nbp < 2) {
         throw std::invalid_argument("Invalid input data");
     }
 
-    std::vector<std::vector<float>> result; // Résultat des points interpolés
-    int n = points.size();
+    std::vector<std::vector<float>> result; // Résultat des points interpolés.
+    int n = points.size(); // Nombre de points dans la liste.
 
-    // Parcourir chaque segment entre deux points
+    // Parcourir chaque segment entre deux points successifs.
     for (int i = 0; i < n - 1; ++i) {
-        float x0 = points[i][0], y0 = points[i][1];      // Point de départ
-        float x1 = points[i + 1][0], y1 = points[i + 1][1]; // Point d'arrivée
-        float m0 = derivatives[i];                      // Dérivée en x0
-        float m1 = derivatives[i + 1];                  // Dérivée en x1
+        float x0 = points[i][0], y0 = points[i][1];      // Coordonnées du point de départ.
+        float x1 = points[i + 1][0], y1 = points[i + 1][1]; // Coordonnées du point d'arrivée.
+        float m0 = derivatives[i];                      // Dérivée au point de départ.
+        float m1 = derivatives[i + 1];                  // Dérivée au point d'arrivée.
 
-        // Générer `nbp` points pour ce segment
+        float dx = x1 - x0; // Différence entre les abscisses (utilisée pour la normalisation).
+
+        // Générer `nbp` points interpolés pour ce segment.
         for (int j = 0; j < nbp; ++j) {
-            float t = static_cast<float>(j) / (nbp - 1); // Paramètre normalisé [0, 1]
+            float t = static_cast<float>(j) / (nbp - 1); // Paramètre normalisé entre [0, 1].
 
-            // Polynômes de base de Hermite
-            float h00 = (1 + 2 * t) * (1 - t) * (1 - t);
-            float h10 = t * (1 - t) * (1 - t);
-            float h01 = t * t * (3 - 2 * t);
-            float h11 = t * t * (t - 1);
+            // Polynômes de base de Hermite (comme dans ton cours) :
+            float h1 = 2 * t * t * t - 3 * t * t + 1;        // Contribue à f(x0).
+            float h2 = -2 * t * t * t + 3 * t * t;           // Contribue à f(x1).
+            float h3 = t * t * t - 2 * t * t + t;            // Contribue à f'(x0).
+            float h4 = t * t * t - t * t;                    // Contribue à f'(x1).
 
-            // Calcul de la position interpolée
-            float x = h00 * x0 + h10 * (x1 - x0) + h01 * x1 + h11 * (x1 - x0);
-            float y = h00 * y0 + h10 * m0 * (x1 - x0) + h01 * y1 + h11 * m1 * (x1 - x0);
+            // Calcul de la position interpolée dans le plan (x, y) :
+            float x = h1 * x0 + h2 * x1 + h3 * dx + h4 * dx;
+            float y = h1 * y0 + h2 * y1 + h3 * m0 * dx + h4 * m1 * dx;
 
-            result.push_back({ x, y });
+            result.push_back({ x, y }); // Ajoute le point interpolé au résultat.
         }
     }
 
-    return result;
+    return result; // Retourne tous les points calculés pour former la courbe.
 }
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -310,7 +316,7 @@ int main()
 
         std::cout << "Choisissez la partie a lancer (1 pour Ellipse, 2 exo, 3 exo, 4 pour quitter) : ";
         int choixPartieALancer;
-        std::cin >> choix;
+        std::cin >> choixPartieALancer;
         std::cout << std::endl;
 
         // Effectuer des actions en fonction du choix
