@@ -5,6 +5,8 @@
 #include <cmath>
 #include <numbers>
 
+const double pi = std::numbers::pi;
+
 // fonction qui calcule le cos d'un angle
 // utilise la serie de taylor pour faire une approximation
 void Cos(float angle, float& cosValue) {
@@ -214,31 +216,18 @@ void Trace(Affichage& affichage)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Symétrie d'une courbe
-void AjouterSymetrie(const std::vector<std::vector<float>>& points, std::vector<std::vector<float>>& pointsSymetriques, char type) {
-    pointsSymetriques.clear(); // Vider les points symétriques
-
-    if (type == 'A') { // Symétrie axiale par rapport à y=0
-        for (const auto& point : points) {
-            pointsSymetriques.push_back({ point[0], -point[1] });
-        }
-    }
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// Fonction génératrice de courbes
+// Fonction génératrice de courbes avec dérivées premières
 void Trace_courbe(Affichage& affichage) {
     affichage.clear(); // Nettoyer l'affichage
 
     std::vector<std::vector<float>> points; // Points d'origine
-    std::vector<std::vector<float>> pointsSymetriques; // Points symétriques
+    std::vector<std::vector<float>> pointsSymetriques; // Points sym?triques
+    std::vector<float> derivéesPremières; // Dérivées premières à chaque point
+    std::vector<float> derivéesPremièresSymetriques; // Dérivées premières pour les points symétriques
 
     // Saisie des points par l'utilisateur
-    std::cout << "Entrez les points par lesquels la courbe doit passer." << std::endl;
-    std::cout << "Entrez les coordonnées x et y séparément (tapez 'fin' pour terminer)." << std::endl;
+    std::cout << "Entrez les points par lesquels la courbe doit passer, ainsi que les dérivées premières." << std::endl;
+    std::cout << "Entrez les coordonnées x et y séparément, ainsi que la dérivée première à chaque point (tapez 'fin' pour terminer)." << std::endl;
 
     while (true) {
         std::string input;
@@ -260,6 +249,12 @@ void Trace_courbe(Affichage& affichage) {
         std::cin >> y;
 
         points.push_back({ x, y });
+
+        std::cout << "Dérivée première en ce point : ";
+        float derivée;
+        std::cin >> derivée;
+
+        derivéesPremières.push_back(derivée);
     }
 
     if (points.size() < 2) {
@@ -267,27 +262,28 @@ void Trace_courbe(Affichage& affichage) {
         return;
     }
 
-    // Demander si une symétrie doit être ajoutée
-    std::cout << "Voulez-vous ajouter une symétrie axiale ? (1: oui, 0: non) : ";
+    // Demander si une sym?trie doit ?tre ajout?e
+    std::cout << "Voulez-vous ajouter une sym?trie axiale ? (1: oui, 0: non) : ";
     int choixSymetrie;
     std::cin >> choixSymetrie;
 
     if (choixSymetrie == 1) {
-        for (const auto& point : points) {
-            pointsSymetriques.push_back({ point[0], -point[1] }); // Symétrie par rapport à l'axe x
+        // Appliquer la symétrie axiale : inversion des y et des dérivées premières
+        for (size_t i = 0; i < points.size(); ++i) {
+            pointsSymetriques.push_back({ points[i][0], -points[i][1] }); // Symétrie des points
+            derivéesPremièresSymetriques.push_back(-derivéesPremières[i]); // Inverser les dérivées premières
         }
     }
 
-    // Nombre de points pour générer chaque courbe
+    // Interpolation de Hermite
     int NombreDePoint = 250;
+    std::vector<std::vector<float>> courbe = Hermite(points, derivéesPremières, NombreDePoint);
+    affichage.addV(courbe); // Afficher la courbe générée par interpolation de Hermite
 
-    // Interpolation séparée et affichage des courbes
-    std::vector<std::vector<float>> courbeOriginale = Lagrange(points, NombreDePoint);
-    affichage.addV(courbeOriginale); // Afficher la courbe originale
-
+    // Interpolation s?par?e et affichage des courbes
     if (choixSymetrie == 1) {
-        std::vector<std::vector<float>> courbeSymetrique = Lagrange(pointsSymetriques, NombreDePoint);
-        affichage.addV(courbeSymetrique); // Afficher la courbe symétrique
+        std::vector<std::vector<float>> courbeSymetrique = Hermite(pointsSymetriques, derivéesPremièresSymetriques, NombreDePoint);
+        affichage.addV(courbeSymetrique);
     }
 }
 
