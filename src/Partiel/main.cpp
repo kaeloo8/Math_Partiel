@@ -10,11 +10,11 @@ const double pi = std::numbers::pi;
 // fonction qui calcule le cos d'un angle
 // utilise la serie de taylor pour faire une approximation
 void Cos(float angle, float& cosValue) {
-    cosValue = 1.0f; // premier terme de la série
+    cosValue = 1.0f; // premier terme de la serie
     float term = 1.0f; // def la valeur initiale de chaque terme
-    for (int i = 1; i < 10; ++i) { // on prend 10 termes pour plus de précison
-        term *= -angle * angle / (2 * i * (2 * i - 1)); // on calcule chaque terme de la série
-        cosValue += term; // on ajoute chaque terme au résultat total
+    for (int i = 1; i < 10; ++i) { // on prend 10 termes pour plus de precison
+        term *= -angle * angle / (2 * i * (2 * i - 1)); // on calcule chaque terme de la serie
+        cosValue += term; // on ajoute chaque terme au resultat total
     }
 }
 
@@ -26,9 +26,9 @@ void Cos(float angle, float& cosValue) {
 // fonction qui calcule le sinus d'un angle
 // pareil que pour le cos utilisation de taylor
 void Sin(float angle, float& sinValue) {
-    sinValue = angle; // premier terme de la série
+    sinValue = angle; // premier terme de la serie
     float term = angle; // def la valeur initiale de chaque terme
-    for (int i = 1; i < 10; ++i) { // encore une fois, 10 termes pour plus de précision
+    for (int i = 1; i < 10; ++i) { // encore une fois, 10 termes pour plus de precision
         term *= -angle * angle / ((2 * i) * (2 * i + 1)); // calcul du terme suivant
         sinValue += term; // on ajoute ce terme au resultat final
     }
@@ -49,13 +49,13 @@ void Ellipse(float xC, float yC, float a, float b, Affichage& affichage) {
         // calcul de l'angle 
         float angle = t * 2 * 3.14159f / numPoints;
 
-        // approximation des valeurs de cos(angle) et sin(angle) avec les fonctions définies
+        // approximation des valeurs de cos(angle) et sin(angle) avec les fonctions definies
         float cosValue;
         float sinValue;
         Cos(angle, cosValue); // ici on appelle la fonction Cos pour obtenir cos(angle)
         Sin(angle, sinValue); // ici on appelle la fonction Sin pour obtenir sin(angle)
 
-        // calcul des coordonnées (x, y)
+        // calcul des coordonnees (x, y)
         float x = xC + a * cosValue; // pour x, on applique l'approximation de cos
         float y = yC + b * sinValue; // pour y, on applique l'approximation de sin
 
@@ -72,10 +72,10 @@ void Ellipse(float xC, float yC, float a, float b, Affichage& affichage) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Fonction qui réalise l'interpolation de Lagrange sur un ensemble de points
+// Fonction qui realise l'interpolation de Lagrange sur un ensemble de points
 std::vector<std::vector<float>> Lagrange(std::vector<std::vector<float>> points, int NombreDePoint) {
-    std::vector<std::vector<float>> result; // liste des points calculés par Lagrange
-    int n = points.size();  // on récupère la taille de la liste de points
+    std::vector<std::vector<float>> result; // liste des points calcules par Lagrange
+    int n = points.size();  // on recupere la taille de la liste de points
 
     // interpolation pour trouver le min et max de x
     float minX = points[0][0], maxX = points[0][0]; // on initialise min et max avec le premier point
@@ -100,14 +100,14 @@ std::vector<std::vector<float>> Lagrange(std::vector<std::vector<float>> points,
                     term *= (x - points[k][0]) / (points[j][0] - points[k][0]);
                 }
             }
-            y += term; // on ajoute le terme au résultat final de y
+            y += term; // on ajoute le terme au resultat final de y
         }
 
-        // on ajoute le point (x, y) dans la liste des résultats
+        // on ajoute le point (x, y) dans la liste des resultats
         result.push_back({ x, y });
     }
 
-    return result; // on retourne la liste de points calculés
+    return result; // on retourne la liste de points calcules
 }
 
 
@@ -117,28 +117,28 @@ std::vector<std::vector<float>> Lagrange(std::vector<std::vector<float>> points,
 
 // Fonction pour l'interpolation de Hermite
 std::vector<std::vector<float>> Hermite(const std::vector<std::vector<float>>& points, const std::vector<float>& derivatives, int nbp) {
-    // Fonction pour interpoler une courbe de Hermite à partir des points et de leurs dérivées.
+    // Fonction pour interpoler une courbe de Hermite à partir des points et de leurs derivees.
 
-    // Vérification des données
+    // Verification des donnees
     if (points.size() != derivatives.size() || points.empty() || nbp < 2) {
         throw std::invalid_argument("Invalid input data");
     }
 
-    std::vector<std::vector<float>> result; // Résultat des points interpolés.
+    std::vector<std::vector<float>> result; // Resultat des points interpoles.
     int n = points.size(); // Nombre de points dans la liste.
 
     // Parcourir chaque segment entre deux points successifs.
     for (int i = 0; i < n - 1; ++i) {
-        float x0 = points[i][0], y0 = points[i][1];      // Coordonnées du point de départ.
-        float x1 = points[i + 1][0], y1 = points[i + 1][1]; // Coordonnées du point d'arrivée.
-        float m0 = derivatives[i];                      // Dérivée au point de départ.
-        float m1 = derivatives[i + 1];                  // Dérivée au point d'arrivée.
+        float x0 = points[i][0], y0 = points[i][1];      // Coordonnees du point de depart.
+        float x1 = points[i + 1][0], y1 = points[i + 1][1]; // Coordonnees du point d'arrivee.
+        float m0 = derivatives[i];                      // Derivee au point de depart.
+        float m1 = derivatives[i + 1];                  // Derivee au point d'arrivee.
 
-        float dx = x1 - x0; // Différence entre les abscisses (utilisée pour la normalisation).
+        float dx = x1 - x0; // Difference entre les abscisses (utilisee pour la normalisation).
 
-        // Générer `nbp` points interpolés pour ce segment.
+        // Generer `nbp` points interpoles pour ce segment.
         for (int j = 0; j < nbp; ++j) {
-            float t = static_cast<float>(j) / (nbp - 1); // Paramètre normalisé entre [0, 1].
+            float t = static_cast<float>(j) / (nbp - 1); // Parametre normalise entre [0, 1].
 
             // Polynômes de base de Hermite (comme dans ton cours) :
             float h1 = 2 * t * t * t - 3 * t * t + 1;        // Contribue à f(x0).
@@ -146,27 +146,26 @@ std::vector<std::vector<float>> Hermite(const std::vector<std::vector<float>>& p
             float h3 = t * t * t - 2 * t * t + t;            // Contribue à f'(x0).
             float h4 = t * t * t - t * t;                    // Contribue à f'(x1).
 
-            // Calcul de la position interpolée dans le plan (x, y) :
+            // Calcul de la position interpolee dans le plan (x, y) :
             float x = h1 * x0 + h2 * x1 + h3 * dx + h4 * dx;
             float y = h1 * y0 + h2 * y1 + h3 * m0 * dx + h4 * m1 * dx;
 
-            result.push_back({ x, y }); // Ajoute le point interpolé au résultat.
+            result.push_back({ x, y }); // Ajoute le point interpole au resultat.
         }
     }
 
-    return result; // Retourne tous les points calculés pour former la courbe.
+    return result; // Retourne tous les points calcules pour former la courbe.
 }
 
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Fonction pour le tracé d'une forme quelconque
+// Fonction pour le trace d'une forme quelconque
 void Trace(Affichage& affichage)
 {
-    // liste des points utilisés pour Lagrange et Hermite
+    // liste des points utilises pour Lagrange et Hermite
     std::vector<std::vector<float>> points = {};
     std::vector<float> derivatives = {};
 
@@ -174,7 +173,7 @@ void Trace(Affichage& affichage)
     affichage.addV(Lagrange(points, 250));
 
     points = { {2,-2},{0,-1} };
-    derivatives = { -3,1 };
+    derivatives = { -3,1,2 };
     affichage.add(Hermite(points, derivatives, 250));
 
     points = { {0,-1},{-2,-1}, {-4,-3} };
@@ -222,18 +221,18 @@ void Trace(Affichage& affichage)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Fonction génératrice de courbes avec dérivées premières
+// Fonction generatrice de courbes avec derivees premieres
 void Trace_courbe(Affichage& affichage) {
     affichage.clear(); // Nettoyer l'affichage
 
     std::vector<std::vector<float>> points; // Points d'origine
     std::vector<std::vector<float>> pointsSymetriques; // Points sym?triques
-    std::vector<float> deriveesPremieres; // Dérivées premières à chaque point
-    std::vector<float> deriveesPremieresSymetriques; // Dérivées premières pour les points symétriques
+    std::vector<float> deriveesPremieres; // Derivees premieres à chaque point
+    std::vector<float> deriveesPremieresSymetriques; // Derivees premieres pour les points symetriques
 
     // Saisie des points par l'utilisateur
-    std::cout << "Entrez les points par lesquels la courbe doit passer, ainsi que les dérivées premières." << std::endl;
-    std::cout << "Entrez les coordonnées x et y séparément, ainsi que la dérivée première à chaque point (tapez 'fin' pour terminer)." << std::endl;
+    std::cout << "Entrez les points par lesquels la courbe doit passer, ainsi que les derivees premieres." << std::endl;
+    std::cout << "Entrez les coordonnees x et y separement, ainsi que la derivee premiere à chaque point (tapez 'fin' pour terminer)." << std::endl;
 
     while (true) {
         std::string input;
@@ -274,17 +273,17 @@ void Trace_courbe(Affichage& affichage) {
     std::cin >> choixSymetrie;
 
     if (choixSymetrie == 1) {
-        // Appliquer la symétrie axiale : inversion des y et des dérivées premières
+        // Appliquer la symetrie axiale : inversion des y et des derivees premieres
         for (size_t i = 0; i < points.size(); ++i) {
-            pointsSymetriques.push_back({ points[i][0], -points[i][1] }); // Symétrie des points
-            deriveesPremieresSymetriques.push_back(-deriveesPremieres[i]); // Inverser les dérivées premières
+            pointsSymetriques.push_back({ points[i][0], -points[i][1] }); // Symetrie des points
+            deriveesPremieresSymetriques.push_back(-deriveesPremieres[i]); // Inverser les derivees premieres
         }
     }
 
     // Interpolation de Hermite
     int NombreDePoint = 250;
     std::vector<std::vector<float>> courbe = Hermite(points, deriveesPremieres, NombreDePoint);
-    affichage.addV(courbe); // Afficher la courbe générée par interpolation de Hermite
+    affichage.addV(courbe); // Afficher la courbe generee par interpolation de Hermite
 
     // Interpolation s?par?e et affichage des courbes
     if (choixSymetrie == 1) {
@@ -297,22 +296,32 @@ void Trace_courbe(Affichage& affichage) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <iostream> // Pour l'entrée de la console
+#include <iostream> // Pour l'entree de la console
 
-int main()
-{
-    // liste des points utilisés pour Lagrange et Hermite
+int main(){
+
+    // { {x,y}, {x,y}, ... , {x,y} } 
+    // 
+    // add = {{x,y}, {x,y}, ... , {x,y}}
+    //
+    // addR = { / } -> { \ }   /|\ 
+    //
+    // addV = {x1,y1}, {x2,y2}, ... , {xN,yN} -> {xN,yN},... ,{x2,y2}, {x1,y1}
+    // 
+    // addY = {y,x}, {y,x} -> {x,y}, {x,y}
+
+    // liste des points utilises pour Lagrange et Hermite
     std::vector<std::vector<float>> liste = {};
     std::vector<std::vector<float>> points = {};
     std::vector<float> derivatives = {};
 
-    // création de l'affichage
+    // creation de l'affichage
     Affichage affichage;
 
-    // boucle qui tourne tant que la fenêtre est ouverte
+    // boucle qui tourne tant que la fenetre est ouverte
     while (affichage.Win.isOpen())
     {
-        // Demander à l'utilisateur quelle partie exécuter
+        // Demander à l'utilisateur quelle partie executer
 
         std::cout << "Choisissez la partie a lancer (1 pour Ellipse, 2 exo, 3 exo, 4 pour quitter) : ";
         int choixPartieALancer;
@@ -357,7 +366,7 @@ int main()
 
         }
         if (choixPartieALancer == 4) {
-            // Partie 4: Quitter la boucle (fermer la fenêtre)
+            // Partie 4: Quitter la boucle (fermer la fenetre)
             std::cout << "Quitter..." << std::endl;
             affichage.Win.close();
         }
@@ -365,7 +374,7 @@ int main()
             std::cout << "Choix invalide. Veuillez entrer un nombre entre 1 et 4." << std::endl;
         }
 
-        // Mettre à jour l'affichage après chaque action
+        // Mettre à jour l'affichage apres chaque action
         affichage.Update();
     }
 

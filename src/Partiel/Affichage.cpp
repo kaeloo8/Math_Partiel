@@ -128,7 +128,7 @@ void Affichage::addV(std::vector<std::vector<float>> liste) {
         std::vector<float> Nliste = liste[liste.size() - 1 - i];
         ListePoint.push_back({ Nliste[0] + 7, -1 * Nliste[1] + 7 });
     }
-    // Ajouter un point séparateur après la courbe
+    // Ajouter un point separateur apres la courbe
     ListePoint.push_back({ std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN() });
 }
 
