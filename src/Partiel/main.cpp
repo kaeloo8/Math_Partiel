@@ -3,6 +3,7 @@
 #include "Affichage.h"
 #include <SFML/Graphics.hpp>
 #include <cmath>
+#include <numbers>
 
 // fonction qui calcule le cos d'un angle
 // utilise la serie de taylor pour faire une approximation
@@ -213,14 +214,29 @@ void Trace(Affichage& affichage)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Symétrie d'une courbe
+void AjouterSymetrie(const std::vector<std::vector<float>>& points, std::vector<std::vector<float>>& pointsSymetriques, char type) {
+    pointsSymetriques.clear(); // Vider les points symétriques
+
+    if (type == 'A') { // Symétrie axiale par rapport à y=0
+        for (const auto& point : points) {
+            pointsSymetriques.push_back({ point[0], -point[1] });
+        }
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // Fonction génératrice de courbes
-void Trace_courbe(Affichage& affichage)
-{
+void Trace_courbe(Affichage& affichage) {
     affichage.clear(); // Nettoyer l'affichage
 
-    // Liste pour stocker les points saisis par l'utilisateur
-    std::vector<std::vector<float>> points;
+    std::vector<std::vector<float>> points; // Points d'origine
+    std::vector<std::vector<float>> pointsSymetriques; // Points symétriques
 
+    // Saisie des points par l'utilisateur
     std::cout << "Entrez les points par lesquels la courbe doit passer." << std::endl;
     std::cout << "Entrez les coordonnées x et y séparément (tapez 'fin' pour terminer)." << std::endl;
 
@@ -228,11 +244,8 @@ void Trace_courbe(Affichage& affichage)
         std::string input;
         std::cout << "Point " << points.size() + 1 << " - x (ou 'fin' pour arrêter) : ";
         std::cin >> input;
-
-        // Si l'utilisateur entre "fin", on sort de la boucle
         if (input == "fin") break;
 
-        // Convertir l'entrée en float
         float x;
         try {
             x = std::stof(input);
@@ -242,27 +255,40 @@ void Trace_courbe(Affichage& affichage)
             continue;
         }
 
-        // Saisir la valeur de y
         std::cout << "Point " << points.size() + 1 << " - y : ";
         float y;
         std::cin >> y;
 
-        // Ajouter le point à la liste
         points.push_back({ x, y });
     }
 
-    // Vérifier qu'il y a au moins deux points pour tracer une courbe
     if (points.size() < 2) {
         std::cout << "Il faut au moins deux points pour tracer une courbe." << std::endl;
         return;
     }
 
-    // Nombre de points pour générer la courbe
+    // Demander si une symétrie doit être ajoutée
+    std::cout << "Voulez-vous ajouter une symétrie axiale ? (1: oui, 0: non) : ";
+    int choixSymetrie;
+    std::cin >> choixSymetrie;
+
+    if (choixSymetrie == 1) {
+        for (const auto& point : points) {
+            pointsSymetriques.push_back({ point[0], -point[1] }); // Symétrie par rapport à l'axe x
+        }
+    }
+
+    // Nombre de points pour générer chaque courbe
     int NombreDePoint = 250;
 
-    // Appliquer l'interpolation de Lagrange et afficher la courbe
-    std::vector<std::vector<float>> courbe = Lagrange(points, NombreDePoint);
-    affichage.addV(courbe); // Afficher la courbe
+    // Interpolation séparée et affichage des courbes
+    std::vector<std::vector<float>> courbeOriginale = Lagrange(points, NombreDePoint);
+    affichage.addV(courbeOriginale); // Afficher la courbe originale
+
+    if (choixSymetrie == 1) {
+        std::vector<std::vector<float>> courbeSymetrique = Lagrange(pointsSymetriques, NombreDePoint);
+        affichage.addV(courbeSymetrique); // Afficher la courbe symétrique
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -286,12 +312,12 @@ int main()
     {
         // Demander à l'utilisateur quelle partie exécuter
         std::cout << "Choisissez la partie a lancer (1 pour Ellipse, 2 pour Lagrange, 3 pour Hermite, 4 pour quitter) : ";
-        int choix;
-        std::cin >> choix;
+        int choixPartieALancer;
+        std::cin >> choixPartieALancer;
         std::cout << std::endl;
 
         // Effectuer des actions en fonction du choix
-        if (choix == 1) {
+        if (choixPartieALancer == 1) {
             affichage.clear();
 
             std::cout << "Choisissez l'origin x :";
@@ -313,26 +339,26 @@ int main()
             std::cout << "Dessiner l'ellipse..." << std::endl;
             Ellipse(orx, ory, sx, sy, affichage);
         }
-        if (choix == 2) {
+        if (choixPartieALancer == 2) {
             // Partie 2: Calculer et afficher la courbe Lagrange
             // Utile point : 1,5 // 4,2 // 3,-1 // 2,-2 // 0,-1 // -4,-3 // -4,0 // -2,2 // -1,3 // -2,3 // -5,1 // -6,1 // -6,2 // -5,2 // -2,4
             affichage.clear();
             
             Trace(affichage);
         }
-        if (choix == 3) {
+        if (choixPartieALancer == 3) {
             affichage.clear();
 
             // Partie 3: Calculer et afficher la courbe Hermite
             Trace_courbe(affichage);
 
         }
-        if (choix == 4) {
+        if (choixPartieALancer == 4) {
             // Partie 4: Quitter la boucle (fermer la fenêtre)
             std::cout << "Quitter..." << std::endl;
             affichage.Win.close();
         }
-        if (choix != 1 && 2 && 3 && 4) {
+        if (choixPartieALancer != 1 && 2 && 3 && 4) {
             std::cout << "Choix invalide. Veuillez entrer un nombre entre 1 et 4." << std::endl;
         }
 
