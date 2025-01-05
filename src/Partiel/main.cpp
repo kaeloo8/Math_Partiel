@@ -170,7 +170,7 @@ int main()
     while (affichage.Win.isOpen())
     {
         // Demander à l'utilisateur quelle partie exécuter
-        std::cout << "Choisissez la partie a lancer (1 pour Ellipse, 2 pour Lagrange, 3 pour Hermite, 4 pour quitter) : ";
+        std::cout << "Choisissez la partie a lancer (1 pour Ellipse, 2 exo, 3 exo, 4 pour quitter) : ";
         int choix;
         std::cin >> choix;
         std::cout << std::endl;
@@ -179,19 +179,19 @@ int main()
         if (choix == 1) {
             affichage.clear();
 
-            std::cout << "Choisissez l'origin x :";
+            std::cout << "Position centre x :";
             int orx;
             std::cin >> orx;
             std::cout << std::endl;
-            std::cout << "Choisissez l'origin y :";
+            std::cout << "Position centre y :";
             int ory;
             std::cin >> ory;
             std::cout << std::endl;
-            std::cout << "size x :";
+            std::cout << "largeur ellipse x :";
             int sx;
             std::cin >> sx;
             std::cout << std::endl;
-            std::cout << "size y :";
+            std::cout << "hauteur ellipse y :";
             int sy;
             std::cin >> sy;
             std::cout << std::endl;
