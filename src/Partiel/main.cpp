@@ -140,7 +140,7 @@ std::vector<std::vector<float>> Hermite(const std::vector<std::vector<float>>& p
         for (int j = 0; j < nbp; ++j) {
             float t = static_cast<float>(j) / (nbp - 1); // Parametre normalise entre [0, 1].
 
-            // Polynômes de base de Hermite (comme dans ton cours) :
+            // Polynômes de base de Hermite  :
             float h1 = 2 * t * t * t - 3 * t * t + 1;        // Contribue à f(x0).
             float h2 = -2 * t * t * t + 3 * t * t;           // Contribue à f(x1).
             float h3 = t * t * t - 2 * t * t + t;            // Contribue à f'(x0).
@@ -173,7 +173,7 @@ void Trace(Affichage& affichage)
     affichage.addV(Lagrange(points, 250));
 
     points = { {2,-2},{0,-1} };
-    derivatives = { -3,1,2 };
+    derivatives = { -3,1 };
     affichage.add(Hermite(points, derivatives, 250));
 
     points = { {0,-1},{-2,-1}, {-4,-3} };
