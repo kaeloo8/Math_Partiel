@@ -22,6 +22,6 @@ public class guardbase : ScriptableObject
 
     [SerializeField] public float error_move_marge = 0.03f;
 
-    [SerializeField] public State default_recherche_state = State.investigate;
+    [SerializeField] public EnemyState default_recherche_state = EnemyState.Suspicious;
 
 }

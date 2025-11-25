@@ -39,7 +39,7 @@ public class Lightcalculator : ScriptableObject
         while (true)
         {
             _lastLightValue = CalculateLight();
-            Debug.Log(_lastLightValue);
+            //Debug.Log(_lastLightValue);
             yield return new WaitForSeconds(updateRate);
         }
     }
