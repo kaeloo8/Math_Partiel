@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f205354991e179142810f61543d341d0, type: 3}
+  m_Name: Viiking_Axe Throw
+  m_EditorClassIdentifier: 
+  abilityName: Special Axe
+  type: 1
+  damage: 25
+  cooldown: 0.1
+  range: 0
+  projectilePrefab: {fileID: 6380479167704796737, guid: 944f7b253bebf4f499192ed1f65596b5, type: 3}
+  fxPrefab: {fileID: 5880797563127281583, guid: 265d3a5ba69981a4698ceabcedf368b0, type: 3}
+  heldItemPrefab: {fileID: 0}
+  behavior: {fileID: 11400000, guid: a4b856fbf2f93894885377a333d97263, type: 2}
