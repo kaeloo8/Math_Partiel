@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 9f9992fdf616f2a4d9e5b6a3f954a0cc
+timeCreated: 1486313006
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 82804
+  packageName: Office Meeting Room and College Interior
+  packageVersion: 1.0
+  assetPath: Assets/Meeting Room/Prefabs/Clock.prefab
+  uploadId: 177475

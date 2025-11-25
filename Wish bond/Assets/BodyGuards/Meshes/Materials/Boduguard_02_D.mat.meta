@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 03656493bfef5cc41a20a6bb61c0ef0b
+timeCreated: 1425503185
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 31711
+  packageName: Bodyguards
+  packageVersion: 1.2
+  assetPath: Assets/BodyGuards/Meshes/Materials/Boduguard_02_D.mat
+  uploadId: 58356

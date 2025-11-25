@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4ae3c7e1cf7e02847bcc2ef71cb0d37a
+timeCreated: 1486312458
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 82804
+  packageName: Office Meeting Room and College Interior
+  packageVersion: 1.0
+  assetPath: Assets/Meeting Room/Prefabs/Table.prefab
+  uploadId: 177475

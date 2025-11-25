@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b4b81f7020745844a8d7be9356d1d6fb
+timeCreated: 1486315238
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 82804
+  packageName: Office Meeting Room and College Interior
+  packageVersion: 1.0
+  assetPath: Assets/Meeting Room/Prefabs/Switch.prefab
+  uploadId: 177475

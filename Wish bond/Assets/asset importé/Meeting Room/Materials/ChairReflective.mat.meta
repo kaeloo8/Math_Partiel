@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c39a71921a28e63419ac0d3f91a99792
+timeCreated: 1463433467
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 82804
+  packageName: Office Meeting Room and College Interior
+  packageVersion: 1.0
+  assetPath: Assets/Meeting Room/Materials/ChairReflective.mat
+  uploadId: 177475

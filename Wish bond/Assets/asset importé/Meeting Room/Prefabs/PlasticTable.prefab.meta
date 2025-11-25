@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: be3b8a03a87d1b44db1b06aaeaa9e8f7
+timeCreated: 1486322240
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 82804
+  packageName: Office Meeting Room and College Interior
+  packageVersion: 1.0
+  assetPath: Assets/Meeting Room/Prefabs/PlasticTable.prefab
+  uploadId: 177475

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dea5edb74e2a3649a68f3db795e330f, type: 3}
+  m_Name: guard base
+  m_EditorClassIdentifier: 
+  speed: 3
+  run: 1
+  hear_distance: 1
+  point_cone: 10
+  material_cone: {fileID: 2100000, guid: dbe9796ec9ce29141b45189b8e3e6d93, type: 2}
+  offset_cone: 0.5
+  detection_multiplie: 1.5
+  timer_investigate: -0.0065369965
+  suspition_decrease: 1
+  detecte_level: 3
+  detecter: 0
+  error_move_marge: 0.03
+  default_recherche_state: 2

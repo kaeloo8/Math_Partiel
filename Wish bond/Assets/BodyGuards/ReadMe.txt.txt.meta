@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 08a0b7b8b51eaab4f9b19f36b2d81d58
+timeCreated: 1425508155
+licenseType: Store
+TextScriptImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 31711
+  packageName: Bodyguards
+  packageVersion: 1.2
+  assetPath: Assets/BodyGuards/ReadMe.txt.txt
+  uploadId: 58356

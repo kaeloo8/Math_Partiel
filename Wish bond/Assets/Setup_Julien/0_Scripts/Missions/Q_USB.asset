@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5a6217e1282ad84d91c40153d63a6a2, type: 3}
+  m_Name: Q_USB
+  m_EditorClassIdentifier: 
+  questId: USB_01
+  title: "R\xE9cup\xE9ration d'une clef USB"
+  description: "Trouv\xE9 et r\xE9cup\xE9r\xE9 une clef USB contenant des informations
+    top-secret."
+  moneyReward: 0

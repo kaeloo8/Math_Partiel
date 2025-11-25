@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3af7f91f75256174bb06fdd807310e99
+timeCreated: 1486313416
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 82804
+  packageName: Office Meeting Room and College Interior
+  packageVersion: 1.0
+  assetPath: Assets/Meeting Room/Prefabs/BigGlassDoor.prefab
+  uploadId: 177475

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 14e56be1e88b9db4fac2a7452906b2f0
+timeCreated: 1486271366
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 82804
+  packageName: Office Meeting Room and College Interior
+  packageVersion: 1.0
+  assetPath: Assets/Meeting Room/Prefabs/DoorClosed.prefab
+  uploadId: 177475
